@@ -10,9 +10,9 @@ app.use("/app", mw.middlewareMetricsInc); //Increments requests counter
 app.use("/app", express.static("./src/app"));
 app.use(mw.middlewareFinish);
 
-app.get("/healthz", rh.healthzCheck); //Checks server status
-app.get("/reset", rh.reset); //Resets reqs counter
-app.get("/metrics", rh.checkNumReqs); //Checks num of received reqs
+app.get("/api/healthz", rh.healthzCheck); //Checks server status
+app.get("/api/reset", rh.reset); //Resets reqs counter
+app.get("/api/metrics", rh.checkNumReqs); //Checks num of received reqs
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
