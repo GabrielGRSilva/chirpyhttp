@@ -11,8 +11,9 @@ app.use("/app", express.static("./src/app"));
 app.use(mw.middlewareFinish);
 
 app.get("/api/healthz", rh.healthzCheck); //Checks server status
-app.get("/api/reset", rh.reset); //Resets reqs counter
-app.get("/api/metrics", rh.checkNumReqs); //Checks num of received reqs
+
+app.get("/admin/reset", rh.reset); //Resets reqs counter
+app.get("/admin/metrics", rh.checkNumReqs); //Checks num of received reqs
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
