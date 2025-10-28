@@ -1,0 +1,1 @@
+export const forbiddenWords = ["kerfuffle", "sharbert", "fornax"]; //list of bad words

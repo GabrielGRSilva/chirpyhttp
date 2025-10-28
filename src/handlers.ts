@@ -50,7 +50,8 @@ try{
     res.status(400).send(hp.JSONTooLongAnswer());
   }
   else{
-    res.status(200).send(hp.jsonValidDataAnswer());
+    const cleanedBody = hp.cleanBody(messageBody);
+    res.status(200).send(hp.jsonValidDataAnswer(cleanedBody));
   };
   }catch(err){
     console.log(`DEBUG: Error is ${err}`);
