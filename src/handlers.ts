@@ -1,7 +1,7 @@
 import {RequestHandler} from "express"
 import {config} from "./config.js";
 import * as hp from "./checkhelpers.js"
-import {errorHandler} from "./errormiddleware.js"
+import * as ec from "./errorclasses.js"
 
 export const healthzCheck: RequestHandler = (_req, res) => {
     res.set("Content-Type", "text/plain; charset=utf-8");
@@ -30,7 +30,7 @@ try{
   const messageBody = req.body.body;
 
   if (messageBody.length > 140){
-    const err = new Error("Something went wrong on our end");
+    const err = new ec.BadRequest("Chirp is too long. Max length is 140");
     return next(err);
   }
   else{
