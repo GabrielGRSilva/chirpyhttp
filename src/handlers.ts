@@ -23,7 +23,7 @@ export const reset: RequestHandler = (_req, res, _next) => { //Resets received r
   res.send("Counter reset successfully");
 };
 
-export const jsonCheck: RequestHandler = (req, res, _next) => { //Checks if post message is valid
+/*export const jsonCheck: RequestHandler = (req, res, _next) => { //Checks if post message is valid
   let body = "";
   req.on("data", (chunk) => {
     body += chunk;
@@ -39,4 +39,21 @@ export const jsonCheck: RequestHandler = (req, res, _next) => { //Checks if post
       res.status(400).send(hp.JSONErrorAnswer());
     };
   });
+};*/
+
+export const jsonCheck: RequestHandler = (req, res, _next) => { //Checks if post message is valid
+
+try{
+  const messageBody = req.body.body;
+
+  if (messageBody.length > 140){
+    res.status(400).send(hp.JSONTooLongAnswer());
+  }
+  else{
+    res.status(200).send(hp.jsonValidDataAnswer());
+  };
+  }catch(err){
+    console.log(`DEBUG: Error is ${err}`);
+    res.status(400).send(hp.JSONErrorAnswer());
+  };
 };
