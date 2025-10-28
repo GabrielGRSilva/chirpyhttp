@@ -1,6 +1,7 @@
 import {RequestHandler} from "express"
 import {config} from "./config.js";
 import * as hp from "./checkhelpers.js"
+import {errorHandler} from "./errormiddleware.js"
 
 export const healthzCheck: RequestHandler = (_req, res) => {
     res.set("Content-Type", "text/plain; charset=utf-8");
@@ -23,38 +24,20 @@ export const reset: RequestHandler = (_req, res, _next) => { //Resets received r
   res.send("Counter reset successfully");
 };
 
-/*export const jsonCheck: RequestHandler = (req, res, _next) => { //Checks if post message is valid
-  let body = "";
-  req.on("data", (chunk) => {
-    body += chunk;
-    });
-  
-  req.on("end", () =>{
-    if (body.length > 140){
-        res.status(400).send(hp.JSONTooLongAnswer());
-      };
-    try{
-      res.status(200).send(hp.jsonValidDataAnswer());
-    }catch(err){
-      res.status(400).send(hp.JSONErrorAnswer());
-    };
-  });
-};*/
-
-export const jsonCheck: RequestHandler = (req, res, _next) => { //Checks if post message is valid
+export const jsonCheck: RequestHandler = (req, res, next) => { //Checks if post message is valid
 
 try{
   const messageBody = req.body.body;
 
   if (messageBody.length > 140){
-    res.status(400).send(hp.JSONTooLongAnswer());
+    const err = new Error("Something went wrong on our end");
+    return next(err);
   }
   else{
     const cleanedBody = hp.cleanBody(messageBody);
-    res.status(200).send(hp.jsonValidDataAnswer(cleanedBody));
+    return res.status(200).send(hp.jsonValidDataAnswer(cleanedBody));
   };
   }catch(err){
-    console.log(`DEBUG: Error is ${err}`);
-    res.status(400).send(hp.JSONErrorAnswer());
+    return next(err);
   };
 };

@@ -1,6 +1,7 @@
 import express from "express";
 import * as mw from "./middleware.js";
 import * as rh from "./handlers.js"
+import {errorHandler} from "./errormiddleware.js"
 
 const app = express();
 
@@ -23,3 +24,5 @@ app.post("/admin/reset", rh.reset); //Resets reqs counter
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
+
+app.use(errorHandler);

@@ -1,14 +1,17 @@
 import {RequestHandler} from "express"
 import {config} from "./config.js";
+import {errorHandler} from "./errormiddleware.js"
 
 export const middlewareFinish: RequestHandler = (req,res,next) => {
     res.on("finish", () => { //Listens for finish events to check their status and log if failed
     const status = res.statusCode;
 
     if (status < 200 || status > 299){
-        console.log(`[NON-OK] ${req.method} ${req.url} - Status: ${status}`);
-            };
-        });
+        const err = new Error(`[NON-OK] ${req.method} ${req.url} - Status: ${status}`);
+        return next(err);
+        };
+    });
+
     next();
 };
 

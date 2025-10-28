@@ -1,5 +1,3 @@
-import {middlewareMetricsInc} from "./middleware";
-
 type APIConfig = { //Number of received requests
   fileServerHits: number;
 };
