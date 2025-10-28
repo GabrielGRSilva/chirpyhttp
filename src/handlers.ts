@@ -1,5 +1,6 @@
 import {RequestHandler} from "express"
 import {config} from "./config.js";
+import * as hp from "./checkhelpers.js"
 
 export const healthzCheck: RequestHandler = (_req, res) => {
     res.set("Content-Type", "text/plain; charset=utf-8");
@@ -20,4 +21,22 @@ export const reset: RequestHandler = (_req, res, _next) => { //Resets received r
   config.fileServerHits = 0;
   res.set("Content-Type", "text/plain; charset=utf-8");
   res.send("Counter reset successfully");
+};
+
+export const jsonCheck: RequestHandler = (req, res, _next) => { //Checks if post message is valid
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk;
+    });
+  
+  req.on("end", () =>{
+    if (body.length > 140){
+        res.status(400).send(hp.JSONTooLongAnswer());
+      };
+    try{
+      res.status(200).send(hp.jsonValidDataAnswer());
+    }catch(err){
+      res.status(400).send(hp.JSONErrorAnswer());
+    };
+  });
 };
