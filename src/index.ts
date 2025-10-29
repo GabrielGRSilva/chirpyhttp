@@ -2,6 +2,13 @@ import express from "express";
 import * as mw from "./middleware.js";
 import * as rh from "./handlers.js"
 import {errorHandler} from "./errormiddleware.js"
+import postgres from "postgres";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import { drizzle } from "drizzle-orm/postgres-js";
+import * as cf from "./config.js"
+
+const migrationClient = postgres(cf.config.db.url, { max: 1 });
+await migrate(drizzle(migrationClient), cf.config.db.migrationConfig);
 
 const app = express();
 

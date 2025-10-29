@@ -1,19 +1,28 @@
-process.loadEnvFile();//Loads .env stuff like the connection string to the database;
+import type { MigrationConfig } from "drizzle-orm/migrator";
 
-const envObj = process.env;
+process.loadEnvFile();//Loads .env stuff like the connection string to the database;
 
 type APIConfig = { //Number of received requests
   fileServerHits: number;
-  dbURL: string;
 };
 
-export const config: APIConfig = { //Obj to hold stateful data
+type DBConfig = { //Database info
+  url: string;
+  migrationConfig: MigrationConfig;
+};
+
+export const config = {
+  db: {
+    url: envOrThrow("DB_URL"),
+    migrationConfig: { migrationsFolder: "./src/db/migrations" },
+  } satisfies DBConfig,
+  api: {
     fileServerHits: 0,
-    dbURL: envOrThrow("DB_URL"),
+  } satisfies APIConfig,
 };
 
 function envOrThrow(key: string): string { //Verifies if DB_URL is valid
   const val = process.env[key];
   if (typeof val === "string" && val.length > 0) return val;
   throw new Error(`${key} not found!`);
-};
+}; 
