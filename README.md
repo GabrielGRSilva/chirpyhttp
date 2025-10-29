@@ -11,6 +11,7 @@ This is the code for a HTTP server based on a fictional social service called "C
 
 * TypeScript / JavaScript;
 * PostgreSQL (database);
+* Drizzle;
 * NodeJS;
 * Express;
 * Nodemon (during development to make server restart easier).

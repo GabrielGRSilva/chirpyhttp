@@ -19,3 +19,6 @@ server.log
 
 # OS cruft
 .DS_Store
+
+#secrets
+/secrets
