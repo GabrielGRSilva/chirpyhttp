@@ -6,6 +6,11 @@ dist/
 
 # env/config
 .env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
 
 # logs
 npm-debug.log*
@@ -20,5 +25,7 @@ server.log
 # OS cruft
 .DS_Store
 
-#secrets
-/secrets
+#cache
+coverage/
+.turbo/
+.pnpm-store/
