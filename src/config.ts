@@ -4,6 +4,7 @@ process.loadEnvFile();//Loads .env stuff like the connection string to the datab
 
 type APIConfig = { //Number of received requests
   fileServerHits: number;
+  platform: string;
 };
 
 type DBConfig = { //Database info
@@ -18,6 +19,7 @@ export const config = {
   } satisfies DBConfig,
   api: {
     fileServerHits: 0,
+    platform: envOrThrow("PLATFORM"),
   } satisfies APIConfig,
 };
 

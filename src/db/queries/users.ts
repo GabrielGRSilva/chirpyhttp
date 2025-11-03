@@ -1,5 +1,6 @@
 import { db } from "../dbindex.js";
 import { NewUser, users } from "../schema.js";
+import {sql} from "drizzle-orm";
 
 export async function createUser(user: NewUser) {
     //equals to INSERT INTO <table> (<columns>) VALUES (<values>) RETURNING *;
@@ -13,3 +14,12 @@ export async function createUser(user: NewUser) {
 
 //[result] -> Array destructuring is used to get the first item from the returned array. 
 // This is because drizzle returns an array of results, even if there is only one result.
+
+export async function resetUsers(){
+  try{
+    await db.execute(sql`TRUNCATE TABLE users CASCADE;`);
+    console.log("Truncated users table sucessfully!");
+  }catch(err){
+    console.log(err);
+  };
+};

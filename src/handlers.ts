@@ -1,7 +1,8 @@
-import {RequestHandler} from "express"
+import {RequestHandler} from "express";
 import {config} from "./config.js";
-import * as hp from "./checkhelpers.js"
-import * as ec from "./errorclasses.js"
+import * as hp from "./checkhelpers.js";
+import * as ec from "./errorclasses.js";
+import {createUser, resetUsers} from "./db/queries/users.js";
 
 export const healthzCheck: RequestHandler = (_req, res) => {
     res.set("Content-Type", "text/plain; charset=utf-8");
@@ -13,15 +14,16 @@ export const checkNumReqs: RequestHandler = (_req, res, _next) => { //Returns nu
   res.send(`<html>
     <body>
         <h1>Welcome, Chirpy Admin</h1>
-        <p>Chirpy has been visited ${config.fileServerHits} times!</p>
+        <p>Chirpy has been visited ${config.api.fileServerHits} times!</p>
     </body>
     </html>`
 )};
 
 export const reset: RequestHandler = (_req, res, _next) => { //Resets received reqs counter
-  config.fileServerHits = 0;
+  config.api.fileServerHits = 0;
+  resetUsers();
   res.set("Content-Type", "text/plain; charset=utf-8");
-  res.send("Counter reset successfully");
+  res.send("Counter and Users reset successfully");
 };
 
 export const jsonCheck: RequestHandler = (req, res, next) => { //Checks if post message is valid
@@ -37,6 +39,23 @@ try{
     const cleanedBody = hp.cleanBody(messageBody);
     return res.status(200).send(hp.jsonValidDataAnswer(cleanedBody));
   };
+  }catch(err){
+    return next(err);
+  };
+};
+
+export const createUserHandler: RequestHandler = async (req, res, next) => {
+  try{
+    const requestBody = req.body.body;
+
+    if (!("email" in requestBody)){
+      throw new Error("Invalid email!");
+    };
+    const newUser = await createUser({email: requestBody});
+
+    const jsonUser = JSON.stringify(newUser);
+
+    res.status(201).send(hp.jsonValidDataAnswer(jsonUser));
   }catch(err){
     return next(err);
   };

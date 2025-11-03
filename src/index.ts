@@ -24,6 +24,10 @@ app.get("/api/healthz", rh.healthzCheck); //Checks server status
 
 app.post("/api/validate_chirp", rh.jsonCheck); //Checks if message sent to app is valid
 
+app.post("/api/users", rh.createUserHandler);
+
+//ADMIN ENDPOINTS BELOW
+
 app.get("/admin/metrics", rh.checkNumReqs); //Checks num of received reqs
 
 app.post("/admin/reset", rh.reset); //Resets reqs counter
