@@ -30,6 +30,7 @@ export const jsonCheck: RequestHandler = (req, res, next) => { //Checks if post 
 
 try{
   const messageBody = req.body.body;
+  console.log(messageBody);
 
   if (messageBody.length > 140){
     const err = new ec.BadRequest("Chirp is too long. Max length is 140");
@@ -46,16 +47,15 @@ try{
 
 export const createUserHandler: RequestHandler = async (req, res, next) => {
   try{
-    const requestBody = req.body.body;
+    const requestBody = req.body.email;
 
-    if (!("email" in requestBody)){
-      throw new Error("Invalid email!");
-    };
+    if (requestBody){
     const newUser = await createUser({email: requestBody});
 
     const jsonUser = JSON.stringify(newUser);
 
-    res.status(201).send(hp.jsonValidDataAnswer(jsonUser));
+    return res.status(201).send(jsonUser);
+    };
   }catch(err){
     return next(err);
   };

@@ -1,6 +1,5 @@
 import {RequestHandler} from "express"
 import {config} from "./config.js";
-import {errorHandler} from "./errormiddleware.js"
 
 export const middlewareFinish: RequestHandler = (req,res,next) => {
     res.on("finish", () => { //Listens for finish events to check their status and log if failed
@@ -16,6 +15,6 @@ export const middlewareFinish: RequestHandler = (req,res,next) => {
 };
 
 export const middlewareMetricsInc: RequestHandler = (_req, _res, next) => { //Increments number of received requests
-  config.fileServerHits++;
+  config.api.fileServerHits++;
   next();
 };

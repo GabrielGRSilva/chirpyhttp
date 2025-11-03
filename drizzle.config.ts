@@ -1,11 +1,9 @@
+import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
-import * as cf from "./src/config";
 
 export default defineConfig({
-  schema: "src/database/schema.ts",
-  out: "src/database/genfiles",
+  schema: "./src/db/schema.ts",
+  out: "./src/db/genfiles",
   dialect: "postgresql",
-  dbCredentials: {
-    url: cf.config.db.url,
-  },
+  dbCredentials: { url: process.env.DB_URL! },
 });

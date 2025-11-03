@@ -19,7 +19,8 @@ export async function resetUsers(){
   try{
     await db.execute(sql`TRUNCATE TABLE users CASCADE;`);
     console.log("Truncated users table sucessfully!");
+    return;
   }catch(err){
     console.log(err);
   };
-};
+}
