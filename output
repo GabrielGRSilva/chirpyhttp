@@ -50,6 +50,7 @@ urlencoded ok
 route healthz ok
 route users ok
 postChirp ok!
+Get Chirps ok!
 route metrics ok
 route reset ok
 error handler ok
@@ -66,5 +67,27 @@ listening on 8080
 Truncated users table sucessfully!
 {
   body: "If you're committed enough, you can make any story work.",
-  userId: '73e8db91-cac0-4af3-afb0-0de4be20a5e4'
+  userId: '1527ba60-b40a-433e-8525-70a641e175c5'
+}
+{
+  body: 'I once told a woman I was Kevin Costner, and it worked because I believed it.',
+  userId: '1527ba60-b40a-433e-8525-70a641e175c5'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '00000',
+  message: 'truncate cascades to table "chirps"',
+  file: 'tablecmds.c',
+  line: '1848',
+  routine: 'ExecuteTruncateGuts'
+}
+Truncated users table sucessfully!
+{
+  body: "If you're committed enough, you can make any story work.",
+  userId: '6a1cde89-5d15-4214-94cc-2a97dad8d66c'
+}
+{
+  body: 'I once told a woman I was Kevin Costner, and it worked because I believed it.',
+  userId: '6a1cde89-5d15-4214-94cc-2a97dad8d66c'
 }

@@ -3,7 +3,7 @@ import {config} from "./config.js";
 import * as hp from "./checkhelpers.js";
 import * as ec from "./errorclasses.js";
 import {createUser, resetUsers} from "./db/queries/users.js";
-import {createChirp} from "./db/queries/chirps.js";
+import {createChirp, retrieveChirps} from "./db/queries/chirps.js";
 
 export const healthzCheck: RequestHandler = (_req, res) => {
     res.set("Content-Type", "text/plain; charset=utf-8");
@@ -60,7 +60,17 @@ export const postChirpHandler: RequestHandler = async (req, res, next) => {
       const jsonChirp = JSON.stringify(newChirp);
       return res.status(201).send(jsonChirp);
     };
-    }catch(err){
-      return next(err);
-    };
+  }catch(err){
+     return next(err);
+  };
+};
+
+export const getChirpsHandler: RequestHandler = async (_req, res, next) => {
+  try{
+    const chirps = await retrieveChirps();
+    return res.status(200).send(chirps);
+
+  }catch(err){
+    return next(err);
+  };
 };

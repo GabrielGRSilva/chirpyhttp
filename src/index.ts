@@ -33,6 +33,7 @@ async function main() {
   app.get("/api/healthz", rh.healthzCheck); console.log("route healthz ok");
   app.post("/api/users", rh.createUserHandler); console.log("route users ok");
   app.post("/api/chirps", rh.postChirpHandler); console.log("postChirp ok!"); //posts new chirp
+  app.get("/api/chirps",rh.getChirpsHandler);console.log("Get Chirps ok!"); //get chirps as set in db/queries/chirps.ts
 
   app.get("/admin/metrics", rh.checkNumReqs); console.log("route metrics ok");
   app.post("/admin/reset", rh.reset); console.log("route reset ok");
