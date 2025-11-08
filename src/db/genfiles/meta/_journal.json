@@ -15,6 +15,13 @@
       "when": 1762601108929,
       "tag": "0001_same_jocasta",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762602404953,
+      "tag": "0002_abandoned_post",
+      "breakpoints": true
     }
   ]
 }

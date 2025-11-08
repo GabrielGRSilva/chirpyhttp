@@ -51,12 +51,12 @@ export const postChirpHandler: RequestHandler = async (req, res, next) => {
     if (messageBody.body.length > 140){
       const err = new ec.BadRequest("Chirp is too long. Max length is 140");
       return next(err);
-    }else if (!messageBody.user_id){
-      const err = new ec.BadRequest("No user_id provided!");
+    }else if (!messageBody.userId){
+      const err = new ec.BadRequest("No userId provided!");
       return next(err);
     }else{ //If no problems are detected above, create Chirp:
       const cleanedBody = hp.cleanBody(messageBody.body);
-      const newChirp = await createChirp({body: cleanedBody, user_id: messageBody.user_id});
+      const newChirp = await createChirp({body: cleanedBody, userId: messageBody.userId});
       const jsonChirp = JSON.stringify(newChirp);
       return res.status(201).send(jsonChirp);
     };

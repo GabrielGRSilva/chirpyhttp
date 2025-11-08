@@ -1,0 +1,70 @@
+
+> httpserver@1.0.0 dev
+> nodemon --ext ts --exec 'npm run build && node dist/index.js'
+
+[33m[nodemon] 3.1.10[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: ts[39m
+[32m[nodemon] starting `npm run build && node dist/index.js`[39m
+
+> httpserver@1.0.0 build
+> tsc
+
+dotenv ok
+cf ok
+express ok
+postgres ok
+drizzle ok
+migrator ok
+middleware ok
+handlers ok
+errorhandlers ok
+start, platform: dev
+migrationsFolder: /home/exylem/Documents/projects/HTTPServer/src/db/genfiles
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P06',
+  message: 'schema "drizzle" already exists, skipping',
+  file: 'schemacmds.c',
+  line: '132',
+  routine: 'CreateSchemaCommand'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "__drizzle_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '207',
+  routine: 'transformCreateStmt'
+}
+migrations ok
+app created
+mw1 ok
+static ok
+mw2 ok
+json ok
+urlencoded ok
+route healthz ok
+route users ok
+postChirp ok!
+route metrics ok
+route reset ok
+error handler ok
+listening on 8080
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '00000',
+  message: 'truncate cascades to table "chirps"',
+  file: 'tablecmds.c',
+  line: '1848',
+  routine: 'ExecuteTruncateGuts'
+}
+Truncated users table sucessfully!
+{
+  body: "If you're committed enough, you can make any story work.",
+  userId: '73e8db91-cac0-4af3-afb0-0de4be20a5e4'
+}
