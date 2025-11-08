@@ -3,6 +3,7 @@ import {config} from "./config.js";
 import * as hp from "./checkhelpers.js";
 import * as ec from "./errorclasses.js";
 import {createUser, resetUsers} from "./db/queries/users.js";
+import {createChirp} from "./db/queries/chirps.js";
 
 export const healthzCheck: RequestHandler = (_req, res) => {
     res.set("Content-Type", "text/plain; charset=utf-8");
@@ -44,27 +45,22 @@ export const createUserHandler: RequestHandler = async (req, res, next) => {
 
 export const postChirpHandler: RequestHandler = async (req, res, next) => {
   try{
-    const messageBody = req.body.body;
+    const messageBody = req.body;
     console.log(messageBody);
 
-    if (messageBody.length > 140){
+    if (messageBody.body.length > 140){
       const err = new ec.BadRequest("Chirp is too long. Max length is 140");
       return next(err);
-    }
-    else{
-      const cleanedBody = hp.cleanBody(messageBody);
-      return res.status(200).send(hp.jsonValidDataAnswer(cleanedBody));
+    }else if (!messageBody.user_id){
+      const err = new ec.BadRequest("No user_id provided!");
+      return next(err);
+    }else{ //If no problems are detected above, create Chirp:
+      const cleanedBody = hp.cleanBody(messageBody.body);
+      const newChirp = await createChirp({body: cleanedBody, user_id: messageBody.user_id});
+      const jsonChirp = JSON.stringify(newChirp);
+      return res.status(201).send(jsonChirp);
     };
     }catch(err){
       return next(err);
     };
-
 };
-
-
-/* ACCEPTS JSON LIKE THIS:
-{
-  "body": "Hello, world!",
-  "userId": "123e4567-e89b-12d3-a456-426614174000"
-}
-  */
