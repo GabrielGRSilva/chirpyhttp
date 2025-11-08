@@ -31,8 +31,8 @@ async function main() {
   app.use(express.urlencoded({ extended: true })); console.log("urlencoded ok");
 
   app.get("/api/healthz", rh.healthzCheck); console.log("route healthz ok");
-  app.post("/api/validate_chirp", rh.jsonCheck); console.log("route validate ok");
   app.post("/api/users", rh.createUserHandler); console.log("route users ok");
+  app.post("/api/chirps", rh.postChirpHandler); console.log("postChirp ok!"); //posts new chirp
 
   app.get("/admin/metrics", rh.checkNumReqs); console.log("route metrics ok");
   app.post("/admin/reset", rh.reset); console.log("route reset ok");

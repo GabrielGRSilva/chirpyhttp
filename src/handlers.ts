@@ -26,25 +26,6 @@ export const reset: RequestHandler = (_req, res, _next) => { //Resets received r
   res.send("Counter and Users reset successfully");
 };
 
-export const jsonCheck: RequestHandler = (req, res, next) => { //Checks if post message is valid
-
-try{
-  const messageBody = req.body.body;
-  console.log(messageBody);
-
-  if (messageBody.length > 140){
-    const err = new ec.BadRequest("Chirp is too long. Max length is 140");
-    return next(err);
-  }
-  else{
-    const cleanedBody = hp.cleanBody(messageBody);
-    return res.status(200).send(hp.jsonValidDataAnswer(cleanedBody));
-  };
-  }catch(err){
-    return next(err);
-  };
-};
-
 export const createUserHandler: RequestHandler = async (req, res, next) => {
   try{
     const requestBody = req.body.email;
@@ -60,3 +41,30 @@ export const createUserHandler: RequestHandler = async (req, res, next) => {
     return next(err);
   };
 };
+
+export const postChirpHandler: RequestHandler = async (req, res, next) => {
+  try{
+    const messageBody = req.body.body;
+    console.log(messageBody);
+
+    if (messageBody.length > 140){
+      const err = new ec.BadRequest("Chirp is too long. Max length is 140");
+      return next(err);
+    }
+    else{
+      const cleanedBody = hp.cleanBody(messageBody);
+      return res.status(200).send(hp.jsonValidDataAnswer(cleanedBody));
+    };
+    }catch(err){
+      return next(err);
+    };
+
+};
+
+
+/* ACCEPTS JSON LIKE THIS:
+{
+  "body": "Hello, world!",
+  "userId": "123e4567-e89b-12d3-a456-426614174000"
+}
+  */
