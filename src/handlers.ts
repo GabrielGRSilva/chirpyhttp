@@ -34,9 +34,7 @@ export const createUserHandler: RequestHandler = async (req, res, next) => {
     if (requestBody){
     const newUser = await createUser({email: requestBody});
 
-    const jsonUser = JSON.stringify(newUser);
-
-    return res.status(201).send(jsonUser);
+    return res.status(201).send(JSON.stringify(newUser));
     };
   }catch(err){
     return next(err);
@@ -49,16 +47,13 @@ export const postChirpHandler: RequestHandler = async (req, res, next) => {
     console.log(messageBody);
 
     if (messageBody.body.length > 140){
-      const err = new ec.BadRequest("Chirp is too long. Max length is 140");
-      return next(err);
+      return next(new ec.BadRequest("Chirp is too long. Max length is 140"));
     }else if (!messageBody.userId){
-      const err = new ec.BadRequest("No userId provided!");
-      return next(err);
+      return next(new ec.BadRequest("No userId provided!"));
     }else{ //If no problems are detected above, create Chirp:
       const cleanedBody = hp.cleanBody(messageBody.body);
       const newChirp = await createChirp({body: cleanedBody, userId: messageBody.userId});
-      const jsonChirp = JSON.stringify(newChirp);
-      return res.status(201).send(jsonChirp);
+      return res.status(201).send(JSON.stringify(newChirp));
     };
   }catch(err){
      return next(err);
